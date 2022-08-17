@@ -9,12 +9,17 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@rainbow-me/rainbowkit": "^0.4",
+    "@thirdweb-dev/react": "^2",
+    "@thirdweb-dev/sdk": "^2",
+    "ethers": "^5.6.9",
     "next": "12.2.5",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "wagmi": "^0.6.3"
   },
   "devDependencies": {
-    "@types/node": "18.7.5",
+    "@types/node": "18.7.6",
     "@types/react": "18.0.17",
     "@types/react-dom": "18.0.6",
     "eslint": "8.22.0",
