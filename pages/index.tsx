@@ -6,7 +6,7 @@ import styles from "../styles/Home.module.css";
 
 const Home: NextPage = () => {
   const contract = useNFTDrop("0xf96e461a89aaF3bD5E8Df7Ed1d67DE1Eb1C9f472");
-  const { address } = useAccount();
+  const { address, status } = useAccount();
 
   const claim = async () => {
     try {
@@ -17,6 +17,10 @@ const Home: NextPage = () => {
       console.error(e);
     }
   };
+
+  if (status === "connecting" || status === "reconnecting") {
+    return null;
+  }
 
   return (
     <div className={styles.container}>
