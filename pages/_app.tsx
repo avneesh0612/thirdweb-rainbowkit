@@ -1,11 +1,11 @@
-import "../styles/globals.css";
-import type { AppProps } from "next/app";
 import {
   darkTheme,
   getDefaultWallets,
   RainbowKitProvider,
 } from "@rainbow-me/rainbowkit";
 import "@rainbow-me/rainbowkit/styles.css";
+import { ChainId, ThirdwebSDKProvider } from "@thirdweb-dev/react";
+import type { AppProps } from "next/app";
 import {
   chain,
   configureChains,
@@ -15,7 +15,7 @@ import {
 } from "wagmi";
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
-import { ChainId, ThirdwebSDKProvider } from "@thirdweb-dev/react";
+import "../styles/globals.css";
 
 const { chains, provider } = configureChains(
   [chain.polygonMumbai],
@@ -36,14 +36,19 @@ const wagmiClient = createClient({
   provider,
 });
 
-function ThirdwebProvider({ wagmiClient, children }: any) {
+function ThirdwebProvider({
+  wagmiClient,
+  children,
+}: {
+  wagmiClient: any;
+  children: React.ReactNode;
+}) {
   const { data: signer } = useSigner();
 
   return (
     <ThirdwebSDKProvider
-      desiredChainId={ChainId.Mumbai}
+      activeChain={ChainId.Mumbai}
       signer={signer as any}
-      provider={wagmiClient.provider}
       queryClient={wagmiClient.queryClient as any}
     >
       {children}

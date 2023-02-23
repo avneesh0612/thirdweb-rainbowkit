@@ -4,4 +4,15 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 1rem;
+}
+
+.button {
+  cursor: pointer;
+  background: #0070f3;
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 999999px;
+  border: none;
+  outline: none;
 }

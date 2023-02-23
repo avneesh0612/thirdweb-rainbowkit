@@ -1,20 +1,28 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { useNFTDrop } from "@thirdweb-dev/react";
+import { useContract, useNFTDrop } from "@thirdweb-dev/react";
 import type { NextPage } from "next";
+import { useState } from "react";
 import { useAccount } from "wagmi";
 import styles from "../styles/Home.module.css";
 
 const Home: NextPage = () => {
-  const contract = useNFTDrop("0xf96e461a89aaF3bD5E8Df7Ed1d67DE1Eb1C9f472");
+  const { data: contract } = useContract(
+    "0xf96e461a89aaF3bD5E8Df7Ed1d67DE1Eb1C9f472",
+    "nft-drop"
+  );
   const { address, status } = useAccount();
+  const [loading, setLoading] = useState(false);
 
   const claim = async () => {
     try {
+      setLoading(true);
       if (contract) {
         await contract.claim(1);
       }
     } catch (e) {
       console.error(e);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -26,7 +34,9 @@ const Home: NextPage = () => {
     <div className={styles.container}>
       <ConnectButton />
       {address ? (
-        <button onClick={claim}>Claim</button>
+        <button className={styles.button} onClick={claim} disabled={loading}>
+          {loading ? "Claiming..." : "Claim"}
+        </button>
       ) : (
         <p>Please connect your wallet</p>
       )}
