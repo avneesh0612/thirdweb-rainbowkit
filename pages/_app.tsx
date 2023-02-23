@@ -13,15 +13,21 @@ import {
   useSigner,
   WagmiConfig,
 } from "wagmi";
-import { alchemyProvider } from "wagmi/providers/alchemy";
-import { publicProvider } from "wagmi/providers/public";
+import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
+
 import "../styles/globals.css";
 
 const { chains, provider } = configureChains(
   [chain.polygonMumbai],
   [
-    alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API }),
-    publicProvider(),
+    jsonRpcProvider({
+      rpc: (chain) =>
+        chain.id === ChainId.Mumbai
+          ? {
+              http: `https://mumbai.rpc.thirdweb.com`,
+            }
+          : null,
+    }),
   ]
 );
 
